@@ -1,6 +1,10 @@
-# AlgoViz - Interactive Algorithm & Data Structures Visualizer
+# DSAVisualizer - Interactive Algorithm & Data Structures Visualizer
 
-**AlgoViz** is a comprehensive web application that brings algorithms and data structures to life through interactive visualizations. Perfect for students, educators, and developers learning computer science fundamentals.
+**Live Demo:** [seankim0807.github.io/DSAVisualizer](https://seankim0807.github.io/DSAVisualizer/)
+
+**Repository:** [github.com/seankim0807/DSAVisualizer](https://github.com/seankim0807/DSAVisualizer)
+
+**DSAVisualizer** is a comprehensive web application that brings algorithms and data structures to life through interactive visualizations. Perfect for students, educators, and developers learning computer science fundamentals.
 
 ## 🎯 What Makes It Special
 
