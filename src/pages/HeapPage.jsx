@@ -32,15 +32,18 @@ function HeapPage({ showToast }) {
   const [highlighted, setHighlighted] = useState([])
   const [swapped, setSwapped] = useState([])
   const [isAnimating, setIsAnimating] = useState(false)
+  const [speed, setSpeed] = useState('normal')
   const heapRef = useRef([])
   const typeRef = useRef('min')
+  const speedRef = useRef('normal')
 
-  const delay = (ms) => new Promise(r => setTimeout(r, ms))
+  const speedMap = { slow: 700, normal: 400, fast: 150 }
+  const delay = () => new Promise(r => setTimeout(r, speedMap[speedRef.current]))
 
   const highlight = async (indices, swapIndices = []) => {
     setHighlighted(indices)
     setSwapped(swapIndices)
-    await delay(400)
+    await delay()
     setHighlighted([])
     setSwapped([])
   }
@@ -180,6 +183,15 @@ function HeapPage({ showToast }) {
   return (
     <div className="page heap-page">
       <div className="controls">
+        <div className="control-group">
+          <label>Speed:</label>
+          <select value={speed} onChange={e => { setSpeed(e.target.value); speedRef.current = e.target.value }} disabled={isAnimating}>
+            <option value="slow">Slow</option>
+            <option value="normal">Normal</option>
+            <option value="fast">Fast</option>
+          </select>
+        </div>
+
         <div className="control-group">
           <label>Type:</label>
           <select value={heapType} onChange={e => switchType(e.target.value)} disabled={isAnimating}>

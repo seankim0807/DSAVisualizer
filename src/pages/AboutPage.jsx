@@ -109,6 +109,61 @@ const sections = [
       { name: 'DFS', desc: 'Explores as far as possible along each branch before backtracking. Uses recursion.' },
     ],
   },
+  {
+    id: 'linkedlist',
+    icon: '🔗',
+    title: 'Linked List',
+    color: '#00d4ff',
+    desc: 'Visualize singly and doubly linked list operations with animated pointer movements between nodes.',
+    how: [
+      'Choose Singly or Doubly linked list from the dropdown',
+      'Type a value and click Insert Head or Insert Tail',
+      'Click Delete to remove a node by value',
+      'Click Search to highlight a node by value',
+      'Watch pointer arrows animate between nodes as the list changes',
+    ],
+    algos: [
+      { name: 'Insert Head', desc: 'Add a new node at the front. O(1).' },
+      { name: 'Insert Tail', desc: 'Add a new node at the end. O(n) for singly, O(1) with tail pointer.' },
+      { name: 'Delete', desc: "Remove a node by value, updating the previous node's next pointer. O(n)." },
+      { name: 'Search', desc: 'Walk the list to find a node by value. O(n).' },
+    ],
+  },
+  {
+    id: 'stackqueue',
+    icon: '📚',
+    title: 'Stack & Queue',
+    color: '#ff6b9d',
+    desc: 'Compare LIFO (Stack) and FIFO (Queue) side by side with animated push, pop, enqueue, and dequeue.',
+    how: [
+      'Type a value into the input field',
+      'Click Push to add to the stack (top), or Enqueue to add to the queue (back)',
+      'Click Pop to remove from the top of the stack',
+      'Click Dequeue to remove from the front of the queue',
+      'Watch both structures animate simultaneously to compare behavior',
+    ],
+    algos: [
+      { name: 'Stack (LIFO)', desc: 'Last In, First Out. Push adds to top, Pop removes from top.' },
+      { name: 'Queue (FIFO)', desc: 'First In, First Out. Enqueue adds to back, Dequeue removes from front.' },
+    ],
+  },
+  {
+    id: 'binarysearch',
+    icon: '🔍',
+    title: 'Binary Search',
+    color: '#00ff88',
+    desc: 'Step through binary search on a sorted array with animated left, right, and mid pointer movements.',
+    how: [
+      'Generate a sorted array or enter custom values',
+      'Type a target value to search for',
+      'Click Search to start the animation',
+      'Watch the left, right, and mid pointers move step by step',
+      'Green = found, Red = eliminated range',
+    ],
+    algos: [
+      { name: 'Binary Search', desc: 'O(log n) — Repeatedly halves the search space by comparing target to the mid element.' },
+    ],
+  },
 ]
 
 export default function AboutPage() {

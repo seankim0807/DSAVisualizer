@@ -7,7 +7,7 @@ function Navbar({ activeTab, setActiveTab, tabs }) {
       <div className="navbar-content">
         <h1 className="title">DSAVisualizer</h1>
         <div className="tabs">
-          {tabs.map(tab => (
+          {tabs.filter(t => t.id !== 'about').map(tab => (
             <button
               key={tab.id}
               className={`tab ${activeTab === tab.id ? 'active' : ''}`}
@@ -16,6 +16,13 @@ function Navbar({ activeTab, setActiveTab, tabs }) {
               {tab.label}
             </button>
           ))}
+          <div className="tab-separator" />
+          <button
+            className={`tab tab-about ${activeTab === 'about' ? 'active' : ''}`}
+            onClick={() => setActiveTab('about')}
+          >
+            About
+          </button>
         </div>
       </div>
     </nav>
