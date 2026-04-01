@@ -7,7 +7,7 @@ const sections = [
     id: 'pathfinding',
     icon: '🗺️',
     title: 'Pathfinding',
-    color: '#00d4ff',
+    color: '#6366f1',
     desc: 'Watch algorithms navigate a grid from a start node to an end node in real time.',
     how: [
       'Drag the green node to move the start position',
@@ -31,7 +31,7 @@ const sections = [
     id: 'sorting',
     icon: '📊',
     title: 'Sorting',
-    color: '#9c88ff',
+    color: '#a78bfa',
     desc: 'Visualize sorting algorithms on a bar chart with color-coded comparisons and swaps.',
     how: [
       'Click Generate New Array to create a random array',
@@ -52,7 +52,7 @@ const sections = [
     id: 'tree',
     icon: '🌳',
     title: 'Binary Search Tree',
-    color: '#00ff88',
+    color: '#22c55e',
     desc: 'Build a BST interactively and watch insert, delete, search, and traversal animate node by node.',
     how: [
       'Type a number (0–999) into the input field',
@@ -72,7 +72,7 @@ const sections = [
     id: 'heap',
     icon: '🏔️',
     title: 'Heap',
-    color: '#ffaa00',
+    color: '#f59e0b',
     desc: 'Visualize a Min or Max heap as both a tree and an array, with animated bubble-up and bubble-down.',
     how: [
       'Choose Min Heap or Max Heap from the dropdown',
@@ -92,7 +92,7 @@ const sections = [
     id: 'graph',
     icon: '🕸️',
     title: 'Graph Traversal',
-    color: '#ff6b9d',
+    color: '#8b5cf6',
     desc: 'Build a custom graph by adding nodes and edges, then run BFS or DFS to watch the traversal animate.',
     how: [
       'Select Add Nodes mode and click the canvas to place nodes',
@@ -113,7 +113,7 @@ const sections = [
     id: 'linkedlist',
     icon: '🔗',
     title: 'Linked List',
-    color: '#00d4ff',
+    color: '#38bdf8',
     desc: 'Visualize singly and doubly linked list operations with animated pointer movements between nodes.',
     how: [
       'Choose Singly or Doubly linked list from the dropdown',
@@ -133,7 +133,7 @@ const sections = [
     id: 'stackqueue',
     icon: '📚',
     title: 'Stack & Queue',
-    color: '#ff6b9d',
+    color: '#f472b6',
     desc: 'Compare LIFO (Stack) and FIFO (Queue) side by side with animated push, pop, enqueue, and dequeue.',
     how: [
       'Type a value into the input field',
@@ -151,7 +151,7 @@ const sections = [
     id: 'binarysearch',
     icon: '🔍',
     title: 'Binary Search',
-    color: '#00ff88',
+    color: '#34d399',
     desc: 'Step through binary search on a sorted array with animated left, right, and mid pointer movements.',
     how: [
       'Generate a sorted array or enter custom values',

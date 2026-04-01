@@ -174,10 +174,10 @@ function HeapPage({ showToast }) {
   const pos = getPositions(heap.length)
 
   const getNodeColor = (i) => {
-    if (swapped.includes(i)) return '#ff4757'
-    if (highlighted.includes(i)) return '#ffaa00'
-    if (i === 0) return '#00d4ff'
-    return '#9c88ff'
+    if (swapped.includes(i)) return '#ef4444'
+    if (highlighted.includes(i)) return '#f59e0b'
+    if (i === 0) return '#6366f1'
+    return '#8b5cf6'
   }
 
   return (

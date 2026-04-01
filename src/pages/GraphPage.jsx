@@ -234,10 +234,10 @@ function GraphPage({ showToast }) {
   }
 
   const getNodeColor = (id) => {
-    if (id === currentNode) return '#ffaa00'
-    if (visitedNodes.has(id)) return '#00ff88'
-    if (id === selectedNode) return '#00d4ff'
-    return '#9c88ff'
+    if (id === currentNode) return '#f59e0b'
+    if (visitedNodes.has(id)) return '#22c55e'
+    if (id === selectedNode) return '#6366f1'
+    return '#8b5cf6'
   }
 
   const getNodeLabel = (id) => {
@@ -315,7 +315,7 @@ function GraphPage({ showToast }) {
               return (
                 <line key={i}
                   x1={from.x} y1={from.y} x2={to.x} y2={to.y}
-                  stroke={isSelected ? '#ff4757' : 'var(--border-light)'}
+                  stroke={isSelected ? '#ef4444' : 'var(--border-light)'}
                   strokeWidth={isSelected ? 4 : 2.5}
                   style={{ cursor: mode === 'delete' ? 'pointer' : 'default', transition: 'stroke 0.2s' }}
                   onClick={e => handleEdgeClick(e, i)}
