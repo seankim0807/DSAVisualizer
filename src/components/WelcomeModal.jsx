@@ -15,29 +15,33 @@ function WelcomeModal({ onClose }) {
         <div className="modal-overlay" onClick={handleClose}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={handleClose}>×</button>
-            <h2>Welcome to Pathfinding Visualizer</h2>
+            <h2>Welcome to DSAVisualizer</h2>
             <div className="modal-content">
               <div className="instruction">
-                <h3>How to Use:</h3>
+                <h3>What is this?</h3>
+                <p style={{marginBottom:'12px', color:'var(--text-secondary)', fontSize:'14px'}}>
+                  An interactive tool to visualize classic algorithms and data structures in real time. Pick a tab above and start exploring!
+                </p>
+                <h3>Visualizers:</h3>
                 <ul>
-                  <li><strong>Drag the green node</strong> to set the start position</li>
-                  <li><strong>Drag the red node</strong> to set the end position</li>
-                  <li><strong>Click and drag</strong> to draw walls (white cells)</li>
-                  <li>Select an algorithm from the dropdown</li>
-                  <li>Click <strong>Visualize</strong> to see the algorithm in action</li>
-                  <li>Use <strong>Generate Maze</strong> to create random maze patterns</li>
-                  <li><strong>Clear Path</strong> removes animation but keeps walls</li>
-                  <li><strong>Clear Board</strong> resets everything</li>
+                  <li><strong>Pathfinding</strong> — Dijkstra, A*, BFS, DFS, Greedy with maze generation</li>
+                  <li><strong>Sorting</strong> — Bubble, Selection, Insertion, Merge, Quick Sort</li>
+                  <li><strong>Tree</strong> — Binary Search Tree insert, delete, search, traversal</li>
+                  <li><strong>Heap</strong> — Min/Max heap operations with tree + array view</li>
+                  <li><strong>Graph</strong> — Interactive BFS/DFS on custom node-edge graphs</li>
+                  <li><strong>Linked List</strong> — Singly/doubly list with pointer animations</li>
+                  <li><strong>Stack & Queue</strong> — LIFO/FIFO side-by-side comparison</li>
+                  <li><strong>Binary Search</strong> — Step-by-step search on sorted arrays</li>
                 </ul>
               </div>
               <div className="algorithms-info">
-                <h3>Algorithms:</h3>
-                <p><strong>Dijkstra's:</strong> Guarantees shortest path, explores equally in all directions</p>
-                <p><strong>A*:</strong> Guarantees shortest path, faster than Dijkstra using heuristics</p>
-                <p><strong>BFS:</strong> Guarantees shortest path in unweighted grids, simple and fast</p>
+                <h3>Tips:</h3>
+                <p>Use the <strong>About</strong> tab for a full guide on each visualizer.</p>
+                <p>Speed controls let you slow down or speed up any animation.</p>
+                <p>All visualizers work on desktop and mobile.</p>
               </div>
             </div>
-            <button className="modal-button" onClick={handleClose}>Got it!</button>
+            <button className="modal-button" onClick={handleClose}>Let's go!</button>
           </div>
         </div>
       )}

@@ -10,6 +10,7 @@ import GraphPage from './pages/GraphPage'
 import LinkedListPage from './pages/LinkedListPage'
 import StackQueuePage from './pages/StackQueuePage'
 import BinarySearchPage from './pages/BinarySearchPage'
+import AboutPage from './pages/AboutPage'
 import './App.css'
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
     { id: 'linkedlist', label: 'Linked List' },
     { id: 'stackqueue', label: 'Stack & Queue' },
     { id: 'binarysearch', label: 'Binary Search' },
+    { id: 'about', label: 'About' },
   ]
 
   const renderPage = () => {
@@ -51,6 +53,8 @@ function App() {
         return <StackQueuePage showToast={showToast} />
       case 'binarysearch':
         return <BinarySearchPage showToast={showToast} />
+      case 'about':
+        return <AboutPage />
       default:
         return <PathfindingPage showToast={showToast} />
     }

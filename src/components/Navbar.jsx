@@ -5,7 +5,7 @@ function Navbar({ activeTab, setActiveTab, tabs }) {
   return (
     <nav className="navbar">
       <div className="navbar-content">
-        <h1 className="title">Algorithm Visualizer</h1>
+        <h1 className="title">DSAVisualizer</h1>
         <div className="tabs">
           {tabs.map(tab => (
             <button
