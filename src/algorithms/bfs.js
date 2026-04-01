@@ -1,4 +1,11 @@
 function bfs(grid, startNode, endNode) {
+  // Initialize all nodes
+  const allNodes = getAllNodes(grid)
+  for (const node of allNodes) {
+    node.previousNode = null
+    node.isVisited = false
+  }
+
   const visitedNodesInOrder = []
   const queue = [startNode]
   const visited = new Set()
@@ -25,6 +32,16 @@ function bfs(grid, startNode, endNode) {
   }
 
   return { visitedNodesInOrder, shortestPath: [] }
+}
+
+function getAllNodes(grid) {
+  const nodes = []
+  for (const row of grid) {
+    for (const node of row) {
+      nodes.push(node)
+    }
+  }
+  return nodes
 }
 
 function getNeighbors(node, grid) {

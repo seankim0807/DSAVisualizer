@@ -64,17 +64,31 @@ function App() {
     setIsAnimating(true)
     
     // Clear previous animations
-    clearPath()
+    const clearedGrid = grid.map(row =>
+      row.map(cell => ({
+        ...cell,
+        isVisited: false,
+        isPath: false,
+        distance: Infinity,
+        gScore: Infinity,
+        fScore: Infinity,
+        previousNode: null,
+      }))
+    )
+    setGrid(clearedGrid)
+    
+    // Wait a bit for state update
+    await new Promise(resolve => setTimeout(resolve, 50))
     
     // Get the algorithm
     const algorithm = (await import(`./algorithms/${algorithmName}`)).default
     
     // Get start and end nodes from grid
-    const startNodeObj = grid[startNode.row][startNode.col]
-    const endNodeObj = grid[endNode.row][endNode.col]
+    const startNodeObj = clearedGrid[startNode.row][startNode.col]
+    const endNodeObj = clearedGrid[endNode.row][endNode.col]
     
     // Run algorithm
-    const { visitedNodesInOrder, shortestPath } = algorithm(grid, startNodeObj, endNodeObj)
+    const { visitedNodesInOrder, shortestPath } = algorithm(clearedGrid, startNodeObj, endNodeObj)
     
     // Animate visited nodes
     for (const node of visitedNodesInOrder) {

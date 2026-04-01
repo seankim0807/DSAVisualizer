@@ -1,4 +1,12 @@
 function dijkstra(grid, startNode, endNode) {
+  // Initialize all nodes
+  const allNodes = getAllNodes(grid)
+  for (const node of allNodes) {
+    node.distance = Infinity
+    node.previousNode = null
+    node.isVisited = false
+  }
+  
   const visitedNodesInOrder = []
   const unvisitedNodes = getAllNodes(grid)
   startNode.distance = 0

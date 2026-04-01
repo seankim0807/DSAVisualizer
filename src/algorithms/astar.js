@@ -1,4 +1,13 @@
 function astar(grid, startNode, endNode) {
+  // Initialize all nodes
+  const allNodes = getAllNodes(grid)
+  for (const node of allNodes) {
+    node.gScore = Infinity
+    node.fScore = Infinity
+    node.previousNode = null
+    node.isVisited = false
+  }
+
   const visitedNodesInOrder = []
   const openSet = [startNode]
   startNode.gScore = 0
@@ -47,6 +56,16 @@ function heuristic(nodeA, nodeB) {
   const dx = Math.abs(nodeA.row - nodeB.row)
   const dy = Math.abs(nodeA.col - nodeB.col)
   return dx + dy // Manhattan distance
+}
+
+function getAllNodes(grid) {
+  const nodes = []
+  for (const row of grid) {
+    for (const node of row) {
+      nodes.push(node)
+    }
+  }
+  return nodes
 }
 
 function getUnvisitedNeighbors(node, grid) {
