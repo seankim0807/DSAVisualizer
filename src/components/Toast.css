@@ -1,0 +1,33 @@
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #00ff00;
+  color: #000000;
+  padding: 15px 20px;
+  border-radius: 4px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 255, 0, 0.4);
+  animation: toastSlideIn 0.3s ease;
+  z-index: 999;
+}
+
+@keyframes toastSlideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .toast {
+    bottom: 15px;
+    right: 15px;
+    font-size: 14px;
+    padding: 12px 15px;
+  }
+}

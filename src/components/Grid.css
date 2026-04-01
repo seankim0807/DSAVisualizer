@@ -1,0 +1,86 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 20px;
+  background-color: #0d0d0d;
+  overflow: auto;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-row {
+  display: flex;
+  gap: 1px;
+}
+
+.cell {
+  width: 25px;
+  height: 25px;
+  background-color: #2a2a2a;
+  border: 1px solid #1a1a1a;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cell:hover {
+  background-color: #3a3a3a;
+}
+
+.cell.wall {
+  background-color: #ffffff;
+}
+
+.cell.start {
+  background-color: #00ff00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+.cell.end {
+  background-color: #ff0000;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+.cell.visited {
+  animation: visitedAnimation 0.6s ease-out forwards;
+}
+
+@keyframes visitedAnimation {
+  0% {
+    background-color: #2a2a2a;
+    transform: scale(1);
+  }
+  50% {
+    background-color: #7b68ee;
+    transform: scale(1.1);
+  }
+  100% {
+    background-color: #7b68ee;
+    transform: scale(1);
+  }
+}
+
+.cell.path {
+  animation: pathAnimation 0.6s ease-out forwards;
+}
+
+@keyframes pathAnimation {
+  0% {
+    background-color: #7b68ee;
+  }
+  100% {
+    background-color: #ffff00;
+  }
+}
+
+@media (max-width: 768px) {
+  .cell {
+    width: 15px;
+    height: 15px;
+  }
+
+  .grid {
+    padding: 10px;
+  }
+}
