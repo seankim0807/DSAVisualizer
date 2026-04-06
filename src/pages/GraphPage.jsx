@@ -15,6 +15,8 @@ function GraphPage({ showToast }) {
   const [isAnimating, setIsAnimating] = useState(false)
   const [mode, setMode] = useState('add')
   const [speed, setSpeed] = useState('normal')
+  const [edgeWeightInput, setEdgeWeightInput] = useState('1')
+  const [distances, setDistances] = useState(null) // { [nodeId]: number } after Dijkstra
   const svgRef = useRef(null)
   const nodesRef = useRef([])
   const edgesRef = useRef([])
@@ -91,7 +93,8 @@ function GraphPage({ showToast }) {
           ed => (ed.from === selectedNode && ed.to === id) || (ed.from === id && ed.to === selectedNode)
         )
         if (!exists) {
-          const updated = [...edgesRef.current, { from: selectedNode, to: id }]
+          const w = Math.max(1, parseInt(edgeWeightInput) || 1)
+          const updated = [...edgesRef.current, { from: selectedNode, to: id, weight: w }]
           edgesRef.current = updated
           setEdges([...updated])
         }
@@ -125,6 +128,17 @@ function GraphPage({ showToast }) {
     edgesRef.current.forEach(ed => {
       adj[ed.from].push(ed.to)
       adj[ed.to].push(ed.from)
+    })
+    return adj
+  }
+
+  const buildWeightedAdjacency = () => {
+    const adj = {}
+    nodesRef.current.forEach(n => { adj[n.id] = [] })
+    edgesRef.current.forEach(ed => {
+      const w = ed.weight || 1
+      adj[ed.from].push({ id: ed.to, weight: w })
+      adj[ed.to].push({ id: ed.from, weight: w })
     })
     return adj
   }
@@ -184,11 +198,57 @@ function GraphPage({ showToast }) {
     showToast(`DFS complete — visited ${order.length} nodes`)
   }
 
+  const runDijkstra = async () => {
+    if (nodesRef.current.length === 0) { showToast('Add some nodes first'); return }
+    const startId = selectedNode !== null ? selectedNode : nodesRef.current[0].id
+    setIsAnimating(true)
+    setVisitedNodes(new Set())
+    setCurrentNode(null)
+    setTraversalOrder([])
+    setDistances(null)
+
+    const adj = buildWeightedAdjacency()
+    const dist = {}
+    nodesRef.current.forEach(n => { dist[n.id] = Infinity })
+    dist[startId] = 0
+    const visited = new Set()
+
+    for (let iter = 0; iter < nodesRef.current.length; iter++) {
+      let minDist = Infinity
+      let u = null
+      for (const n of nodesRef.current) {
+        if (!visited.has(n.id) && dist[n.id] < minDist) {
+          minDist = dist[n.id]
+          u = n.id
+        }
+      }
+      if (u === null) break
+
+      visited.add(u)
+      setCurrentNode(u)
+      setVisitedNodes(new Set(visited))
+      await delay(speedMap[speed])
+
+      for (const { id: v, weight: w } of (adj[u] || [])) {
+        if (!visited.has(v) && dist[u] + w < dist[v]) {
+          dist[v] = dist[u] + w
+        }
+      }
+    }
+
+    setDistances(dist)
+    setCurrentNode(null)
+    setIsAnimating(false)
+    const startLabel = getNodeLabel(startId)
+    showToast(`Dijkstra complete from node ${startLabel}`)
+  }
+
   const reset = () => {
     if (isAnimating) return
     setVisitedNodes(new Set())
     setCurrentNode(null)
     setTraversalOrder([])
+    setDistances(null)
     setSelectedNode(null)
     setSelectedEdge(null)
   }
@@ -272,8 +332,23 @@ function GraphPage({ showToast }) {
           </select>
         </div>
 
+        {mode === 'edge' && (
+          <div className="control-group">
+            <label>Weight:</label>
+            <input
+              type="number" min="1" max="99"
+              value={edgeWeightInput}
+              onChange={e => setEdgeWeightInput(e.target.value)}
+              disabled={isAnimating}
+              className="input-field"
+              style={{ width: '64px' }}
+            />
+          </div>
+        )}
+
         <button className="btn btn-primary" onClick={runBFS} disabled={isAnimating || nodes.length === 0}>BFS</button>
         <button className="btn btn-primary" onClick={runDFS} disabled={isAnimating || nodes.length === 0}>DFS</button>
+        <button className="btn btn-primary" onClick={runDijkstra} disabled={isAnimating || nodes.length === 0}>Dijkstra</button>
         <button className="btn btn-secondary" onClick={reset} disabled={isAnimating}>Reset Colors</button>
         <button className="btn btn-secondary" onClick={generateRandom} disabled={isAnimating}>Random Graph</button>
         <button className="btn btn-danger" onClick={clearAll} disabled={isAnimating}>Clear</button>
@@ -312,14 +387,25 @@ function GraphPage({ showToast }) {
               const to = nodes.find(n => n.id === ed.to)
               if (!from || !to) return null
               const isSelected = selectedEdge === i
+              const mx = (from.x + to.x) / 2
+              const my = (from.y + to.y) / 2
               return (
-                <line key={i}
-                  x1={from.x} y1={from.y} x2={to.x} y2={to.y}
-                  stroke={isSelected ? '#ef4444' : 'var(--border-light)'}
-                  strokeWidth={isSelected ? 4 : 2.5}
-                  style={{ cursor: mode === 'delete' ? 'pointer' : 'default', transition: 'stroke 0.2s' }}
-                  onClick={e => handleEdgeClick(e, i)}
-                />
+                <g key={i}>
+                  <line
+                    x1={from.x} y1={from.y} x2={to.x} y2={to.y}
+                    stroke={isSelected ? '#ef4444' : 'var(--border-light)'}
+                    strokeWidth={isSelected ? 4 : 2.5}
+                    style={{ cursor: mode === 'delete' ? 'pointer' : 'default', transition: 'stroke 0.2s' }}
+                    onClick={e => handleEdgeClick(e, i)}
+                  />
+                  {(ed.weight && ed.weight !== 1) && (
+                    <text x={mx} y={my - 8} textAnchor="middle"
+                      fill="var(--text-muted)" fontSize="11" fontWeight="600"
+                      style={{ pointerEvents: 'none', userSelect: 'none' }}>
+                      {ed.weight}
+                    </text>
+                  )}
+                </g>
               )
             })}
             {nodes.map(node => (
@@ -357,6 +443,25 @@ function GraphPage({ showToast }) {
             <span style={{ color: 'var(--text-secondary)' }}>
               {traversalOrder.map(id => getNodeLabel(id)).join(' → ')}
             </span>
+          </div>
+        )}
+
+        {distances && (
+          <div style={{
+            padding: '10px 16px', background: 'var(--bg-secondary)', borderRadius: '8px',
+            border: '1px solid var(--border-color)', flexShrink: 0, fontSize: '13px',
+            display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center',
+          }}>
+            <strong style={{ color: 'var(--accent-primary)', whiteSpace: 'nowrap' }}>Shortest Distances: </strong>
+            {nodes.map(n => (
+              <span key={n.id} style={{ color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
+                <strong style={{ color: 'var(--text-primary)' }}>{getNodeLabel(n.id)}</strong>
+                {' = '}
+                <span style={{ color: distances[n.id] === Infinity ? 'var(--text-muted)' : '#22c55e' }}>
+                  {distances[n.id] === Infinity ? '∞' : distances[n.id]}
+                </span>
+              </span>
+            ))}
           </div>
         )}
       </div>

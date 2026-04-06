@@ -33,6 +33,7 @@ function HeapPage({ showToast }) {
   const [swapped, setSwapped] = useState([])
   const [isAnimating, setIsAnimating] = useState(false)
   const [speed, setSpeed] = useState('normal')
+  const [sortedResult, setSortedResult] = useState([])
   const heapRef = useRef([])
   const typeRef = useRef('min')
   const speedRef = useRef('normal')
@@ -122,6 +123,43 @@ function HeapPage({ showToast }) {
     showToast(`Extracted ${extracted}`)
   }
 
+  const heapSort = async () => {
+    if (heapRef.current.length === 0) { showToast('Heap is empty'); return }
+    setIsAnimating(true)
+    setSortedResult([])
+    const sorted = []
+
+    while (heapRef.current.length > 0) {
+      const h = [...heapRef.current]
+      sorted.push(h[0])
+      setSortedResult([...sorted])
+      await highlight([0])
+
+      h[0] = h[h.length - 1]
+      h.pop()
+      heapRef.current = [...h]
+      setHeap([...h])
+
+      let i = 0
+      while (true) {
+        const left = 2 * i + 1
+        const right = 2 * i + 2
+        let target = i
+        if (left < h.length && compare(h[left], h[target], typeRef.current)) target = left
+        if (right < h.length && compare(h[right], h[target], typeRef.current)) target = right
+        if (target === i) break
+        ;[h[i], h[target]] = [h[target], h[i]]
+        await highlight([i, target], [i, target])
+        heapRef.current = [...h]
+        setHeap([...h])
+        i = target
+      }
+    }
+
+    setIsAnimating(false)
+    showToast(`Heap sort complete — ${sorted.length} elements sorted`)
+  }
+
   const generateRandom = () => {
     if (isAnimating) return
     const vals = Array.from({ length: 8 }, () => Math.floor(Math.random() * 100))
@@ -147,6 +185,7 @@ function HeapPage({ showToast }) {
     if (isAnimating) return
     heapRef.current = []
     setHeap([])
+    setSortedResult([])
     showToast('Cleared heap')
   }
 
@@ -218,6 +257,10 @@ function HeapPage({ showToast }) {
 
         <button className="btn btn-secondary" onClick={extract} disabled={isAnimating || heap.length === 0}>
           Extract {heapType === 'min' ? 'Min' : 'Max'}
+        </button>
+
+        <button className="btn btn-primary" onClick={heapSort} disabled={isAnimating || heap.length === 0}>
+          Heap Sort
         </button>
 
         <button className="btn btn-secondary" onClick={generateRandom} disabled={isAnimating}>
@@ -313,6 +356,28 @@ function HeapPage({ showToast }) {
               </div>
             ))}
           </div>
+
+          {sortedResult.length > 0 && (
+            <div style={{
+              display: 'flex', gap: '4px', padding: '12px 16px',
+              background: 'var(--bg-secondary)', borderRadius: '8px',
+              border: '1px solid var(--border-color)', overflowX: 'auto',
+              alignItems: 'center', flexShrink: 0,
+            }}>
+              <span style={{ fontSize: '12px', color: 'var(--text-muted)', marginRight: '8px', whiteSpace: 'nowrap' }}>Sorted:</span>
+              {sortedResult.map((val, i) => (
+                <div key={i} style={{ minWidth: '44px', textAlign: 'center', flexShrink: 0 }}>
+                  <div style={{
+                    padding: '6px 4px', background: '#22c55e', borderRadius: '6px',
+                    fontSize: '13px', fontWeight: '700', color: 'var(--bg-primary)',
+                  }}>
+                    {val}
+                  </div>
+                  <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>{i}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
