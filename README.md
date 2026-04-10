@@ -127,20 +127,20 @@ DSAVisualizer/
 │   │   │   └── quick.js       # Quick sort
 │   │   ├── tree/
 │   │   │   └── bst.js         # Binary Search Tree
-│   │   ├── heap/              # Coming soon
-│   │   ├── graph/             # Coming soon
-│   │   ├── linkedlist/        # Coming soon
-│   │   ├── stackqueue/        # Coming soon
-│   │   └── binarysearch/      # Coming soon
+│   │   ├── heap/
+│   │   ├── graph/
+│   │   ├── linkedlist/
+│   │   ├── stackqueue/
+│   │   └── binarysearch/
 │   ├── pages/
-│   │   ├── PathfindingPage.jsx # Pathfinding visualizer
-│   │   ├── SortingPage.jsx     # Sorting visualizer
-│   │   ├── TreePage.jsx        # BST visualizer
-│   │   ├── HeapPage.jsx        # Heap visualizer (placeholder)
-│   │   ├── GraphPage.jsx       # Graph visualizer (placeholder)
-│   │   ├── LinkedListPage.jsx  # Linked list visualizer (placeholder)
-│   │   ├── StackQueuePage.jsx  # Stack/Queue visualizer (placeholder)
-│   │   ├── BinarySearchPage.jsx # Binary search visualizer (placeholder)
+│   │   ├── PathfindingPage.jsx  # Pathfinding visualizer
+│   │   ├── SortingPage.jsx      # Sorting visualizer
+│   │   ├── TreePage.jsx         # BST visualizer
+│   │   ├── HeapPage.jsx         # Heap visualizer
+│   │   ├── GraphPage.jsx        # Graph visualizer
+│   │   ├── LinkedListPage.jsx   # Linked list visualizer
+│   │   ├── StackQueuePage.jsx   # Stack/Queue visualizer
+│   │   ├── BinarySearchPage.jsx # Binary search visualizer
 │   │   ├── Page.css            # Common page styling
 │   │   └── Tree.css            # Tree page specific styling
 │   ├── App.jsx                 # Main app component
@@ -300,7 +300,6 @@ This project is open source and available under the MIT License.
 
 ## Future Enhancements
 
-- Complete remaining visualizers (Heap, Graph, Linked List, Stack/Queue, Binary Search)
 - Add more algorithms (Bellman-Ford, Floyd-Warshall, Red-Black Trees, etc.)
 - Weighted graphs and terrain types
 - Step-by-step debugging mode

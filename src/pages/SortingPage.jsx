@@ -28,7 +28,7 @@ function SortingPage({ showToast }) {
     setCounter({ comparisons: 0, swaps: 0 })
     setColorStates({})
 
-    const algorithm = (await import(`../algorithms/sorting/${selectedAlgorithm}`)).default
+    const algorithm = (await import(`../algorithms/sorting/${selectedAlgorithm}.js`)).default
     const animations = algorithm(array)
 
     for (const animation of animations) {

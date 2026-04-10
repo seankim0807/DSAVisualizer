@@ -75,7 +75,7 @@ function PathfindingPage({ showToast }) {
 
     await new Promise(resolve => setTimeout(resolve, 50))
 
-    const algorithm = (await import(`../algorithms/pathfinding/${algorithmName}`)).default
+    const algorithm = (await import(`../algorithms/pathfinding/${algorithmName}.js`)).default
     const startNodeObj = clearedGrid[startNode.row][startNode.col]
     const endNodeObj = clearedGrid[endNode.row][endNode.col]
 
