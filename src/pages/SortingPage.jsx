@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
 import './Page.css'
 
-function SortingPage({ showToast }) {
+const SORT_DISPLAY_NAMES = {
+  bubble: 'Bubble Sort',
+  selection: 'Selection Sort',
+  insertion: 'Insertion Sort',
+  merge: 'Merge Sort',
+  quick: 'Quick Sort',
+}
+
+function SortingPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
   const [array, setArray] = useState([])
   const [isAnimating, setIsAnimating] = useState(false)
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('bubble')
@@ -20,15 +28,17 @@ function SortingPage({ showToast }) {
 
   React.useEffect(() => {
     generateArray()
+    onAlgorithmChange?.(SORT_DISPLAY_NAMES['bubble'])
   }, [])
 
   const handleSort = async () => {
     if (isAnimating) return
     setIsAnimating(true)
+    onVizStatusChange?.('running')
     setCounter({ comparisons: 0, swaps: 0 })
     setColorStates({})
 
-    const algorithm = (await import(`../algorithms/sorting/${selectedAlgorithm}.js`)).default
+    const algorithm = (await import(`../algorithms/sorting/${selectedAlgorithm}`)).default
     const animations = algorithm(array)
 
     for (const animation of animations) {
@@ -65,6 +75,7 @@ function SortingPage({ showToast }) {
     }
 
     setIsAnimating(false)
+    onVizStatusChange?.('complete')
     showToast('Sorting complete!')
   }
 
@@ -84,7 +95,10 @@ function SortingPage({ showToast }) {
           <select
             id="algo-select"
             value={selectedAlgorithm}
-            onChange={(e) => setSelectedAlgorithm(e.target.value)}
+            onChange={(e) => {
+              setSelectedAlgorithm(e.target.value)
+              onAlgorithmChange?.(SORT_DISPLAY_NAMES[e.target.value])
+            }}
             disabled={isAnimating}
           >
             <option value="bubble">Bubble Sort</option>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './Page.css'
 
 const NODE_R = 22
@@ -25,9 +25,13 @@ function compare(a, b, type) {
   return type === 'min' ? a < b : a > b
 }
 
-function HeapPage({ showToast }) {
+function HeapPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
   const [heap, setHeap] = useState([])
   const [heapType, setHeapType] = useState('min')
+
+  useEffect(() => {
+    onAlgorithmChange?.('Heap Data Structure')
+  }, [])
   const [inputValue, setInputValue] = useState('')
   const [highlighted, setHighlighted] = useState([])
   const [swapped, setSwapped] = useState([])

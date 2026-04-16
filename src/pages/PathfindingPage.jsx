@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Grid from '../components/Grid'
 import './Page.css'
 
-function PathfindingPage({ showToast }) {
+const ALGO_DISPLAY_NAMES = {
+  dijkstra: "Dijkstra's Algorithm",
+  astar: 'A* Search',
+  bfs: 'Breadth-First Search (BFS)',
+  dfs: 'Depth-First Search (DFS)',
+  greedy: 'Greedy Best-First Search',
+}
+
+function PathfindingPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
   const ROWS = 20
   const COLS = 50
   const [grid, setGrid] = useState([])
@@ -11,6 +19,10 @@ function PathfindingPage({ showToast }) {
   const [isAnimating, setIsAnimating] = useState(false)
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('dijkstra')
   const [nodeCounter, setNodeCounter] = useState({ visited: 0, pathLength: 0 })
+
+  useEffect(() => {
+    onAlgorithmChange?.(ALGO_DISPLAY_NAMES['dijkstra'])
+  }, [])
 
   useEffect(() => {
     initializeGrid()
@@ -58,6 +70,7 @@ function PathfindingPage({ showToast }) {
   const handleVisualize = async (algorithmName) => {
     if (isAnimating) return
     setIsAnimating(true)
+    onVizStatusChange?.('running')
     setNodeCounter({ visited: 0, pathLength: 0 })
 
     const clearedGrid = grid.map(row =>
@@ -75,7 +88,7 @@ function PathfindingPage({ showToast }) {
 
     await new Promise(resolve => setTimeout(resolve, 50))
 
-    const algorithm = (await import(`../algorithms/pathfinding/${algorithmName}.js`)).default
+    const algorithm = (await import(`../algorithms/pathfinding/${algorithmName}`)).default
     const startNodeObj = clearedGrid[startNode.row][startNode.col]
     const endNodeObj = clearedGrid[endNode.row][endNode.col]
 
@@ -101,10 +114,12 @@ function PathfindingPage({ showToast }) {
     }
 
     setIsAnimating(false)
+    onVizStatusChange?.('complete')
   }
 
   const handleGenerateMaze = async () => {
     setIsAnimating(true)
+    onVizStatusChange?.('maze_running')
     const { default: generateMaze } = await import('../algorithms/pathfinding/maze')
     const walls = generateMaze(grid)
 
@@ -118,6 +133,7 @@ function PathfindingPage({ showToast }) {
     }
 
     setIsAnimating(false)
+    onVizStatusChange?.('idle')
     showToast('Maze generated!')
   }
 
@@ -137,7 +153,10 @@ function PathfindingPage({ showToast }) {
           <select
             id="algo-select"
             value={selectedAlgorithm}
-            onChange={(e) => setSelectedAlgorithm(e.target.value)}
+            onChange={(e) => {
+              setSelectedAlgorithm(e.target.value)
+              onAlgorithmChange?.(ALGO_DISPLAY_NAMES[e.target.value])
+            }}
             disabled={isAnimating}
           >
             {Object.entries(algorithmInfo).map(([key, info]) => (

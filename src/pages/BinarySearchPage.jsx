@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Page.css'
 
-function BinarySearchPage({ showToast }) {
+function BinarySearchPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
+  useEffect(() => {
+    onAlgorithmChange?.('Binary Search')
+  }, [])
   const [array, setArray] = useState([])
   const [target, setTarget] = useState('')
   const [customInput, setCustomInput] = useState('')

@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import TreeVisualization from '../components/TreeVisualization'
 import BinarySearchTree from '../algorithms/tree/bst'
 import './Page.css'
 import './Tree.css'
 
-function TreePage({ showToast }) {
+function TreePage({ showToast, onAlgorithmChange, onVizStatusChange }) {
   const [tree, setTree] = useState(new BinarySearchTree())
   const [inputValue, setInputValue] = useState('')
   const [isAnimating, setIsAnimating] = useState(false)
@@ -12,6 +12,10 @@ function TreePage({ showToast }) {
   const [foundNode, setFoundNode] = useState(null)
   const [traversalOrder, setTraversalOrder] = useState([])
   const treeRef = useRef(tree)
+
+  useEffect(() => {
+    onAlgorithmChange?.('Binary Search Tree')
+  }, [])
 
   const handleInsert = () => {
     const value = parseInt(inputValue)

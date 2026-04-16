@@ -1,12 +1,16 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './Page.css'
 
 const NODE_R = 20
 let nextId = 0
 
-function GraphPage({ showToast }) {
+function GraphPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
+
+  useEffect(() => {
+    onAlgorithmChange?.('Breadth-First Search (BFS)')
+  }, [])
   const [selectedNode, setSelectedNode] = useState(null)
   const [selectedEdge, setSelectedEdge] = useState(null)
   const [visitedNodes, setVisitedNodes] = useState(new Set())
