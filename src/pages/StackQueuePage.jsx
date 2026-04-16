@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Page.css'
 
-function StackQueuePage({ showToast }) {
+function StackQueuePage({ showToast, onAlgorithmChange, onVizStatusChange }) {
+  useEffect(() => {
+    onAlgorithmChange?.('Stack & Queue')
+  }, [])
   const [stack, setStack] = useState([])
   const [queue, setQueue] = useState([])
   const [inputValue, setInputValue] = useState('')

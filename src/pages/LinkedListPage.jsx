@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Page.css'
 
-function LinkedListPage({ showToast }) {
+function LinkedListPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
+  useEffect(() => {
+    onAlgorithmChange?.('Linked List')
+  }, [])
   const [nodes, setNodes] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [indexInput, setIndexInput] = useState('')
