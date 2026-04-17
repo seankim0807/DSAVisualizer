@@ -1,99 +1,121 @@
-# DSAVisualizer - Interactive Algorithm & Data Structures Visualizer
+# DSAVisualizer
 
 **Live Demo:** [sean-kim05.github.io/DSAVisualizer](https://sean-kim05.github.io/DSAVisualizer/)
 
-**Repository:** [github.com/sean-kim05/DSAVisualizer](https://github.com/sean-kim05/DSAVisualizer)
+An interactive visualizer for algorithms and data structures, with a built-in Claude AI assistant that explains what you're watching in real time.
 
-**DSAVisualizer** is a comprehensive web application that brings algorithms and data structures to life through interactive visualizations. Perfect for students, educators, and developers learning computer science fundamentals.
+---
 
-## 🎯 What Makes It Special
+## Features
 
-**8 Interactive Visualizers** in one app:
-- **Pathfinding**: Watch Dijkstra, A*, BFS, DFS, and Greedy Best First explore grids in real-time
-- **Sorting**: Visualize Bubble, Selection, Insertion, Merge, and Quick Sort with color-coded comparisons and swaps
-- **Binary Search Trees**: Insert, delete, search, and traverse with animated node highlighting
-- **Heaps**: Min/Max heap operations with tree and array representations
-- **Graphs**: Interactive node-edge graphs with BFS/DFS traversal animations
-- **Linked Lists**: Singly/doubly linked list operations with pointer animations
-- **Stacks & Queues**: Side-by-side visualizations with LIFO/FIFO demonstrations
-- **Binary Search**: Step-by-step search on sorted arrays with pointer animations
+### 8 Interactive Visualizers
+- **Pathfinding** — Dijkstra, A*, BFS, DFS, Greedy Best-First on a live grid
+- **Sorting** — Bubble, Selection, Insertion, Merge, Quick Sort with color-coded comparisons
+- **Binary Search Trees** — Insert, delete, search, and traverse with animated node highlighting
+- **Heaps** — Min/Max heap operations with tree and array representations side by side
+- **Graphs** — Draggable node-edge graphs with BFS/DFS traversal animations
+- **Linked Lists** — Singly/doubly list operations with pointer animations
+- **Stacks & Queues** — Side-by-side LIFO/FIFO demonstrations
+- **Binary Search** — Step-by-step search on sorted arrays with pointer animations
 
-## 🚀 Features
+### AI Assistant (Claude-powered)
+A collapsible AI panel is built into every visualizer. It connects to a Flask backend that streams responses via SSE using the Anthropic API.
 
-- **Smooth Animations**: Custom CSS keyframes with adjustable speeds
-- **Interactive Controls**: Click, drag, and input-based interactions
-- **Educational Tooltips**: Algorithm complexity info and explanations
-- **Dark Theme**: Eye-friendly interface with vibrant accent colors
-- **Responsive Design**: Works on desktop and mobile devices
-- **Real-time Counters**: Track comparisons, swaps, nodes visited, and path lengths
-- **Maze Generation**: Recursive division algorithm for pathfinding challenges
+- **Preset questions** — Explain this algorithm, Time complexity, When should I use this, Compare to similar, What to watch for
+- **Context-aware** — The AI knows which algorithm is active and whether a visualization is running, complete, or generating a maze
+- **Conversation history** — Multi-turn chat within a session
+- **Streaming responses** — Answers stream in token by token
+- **Keyboard shortcut** — Press `/` to focus the input
+- **Copy & Stop** — Copy any response or cancel generation mid-stream
 
-## 🛠️ Technical Stack
+### UI
+- LeetCode/NeetCode-inspired dark design with an indigo/violet palette
+- Flat toolbar-style controls bar on each page
+- Algorithm info bar showing time complexity and a "Shortest Path Guaranteed / Not Guaranteed" badge
+- Stat bar tracking comparisons, swaps, visited nodes, and path length in real time
+- Toast notifications, welcome modal, and smooth tab transitions
+- Fully responsive
 
-- **Frontend**: React 18 with modern hooks
-- **Styling**: CSS variables and custom animations
-- **Build Tool**: Vite for fast development
-- **Architecture**: Modular component structure with algorithm separation
+---
 
-## 📚 Perfect For
+## Tech Stack
 
-- Computer Science students learning algorithms
-- Interview preparation and algorithm practice
-- Educators demonstrating complex concepts
-- Developers understanding data structure operations
+| Layer | Tech |
+|---|---|
+| Frontend | React 18, Vite |
+| Styling | CSS variables, custom animations, Inter font |
+| AI Backend | Flask, Anthropic Python SDK (claude-sonnet-4-6), SSE streaming |
+| Frontend Deploy | GitHub Pages |
+| Backend Deploy | Render |
 
-## How to Use
+---
 
-### Basic Controls
-- **Drag the green node** to move the start position
-- **Drag the red node** to move the end position
-- **Click and drag** to draw/erase walls (white cells)
-- Select an algorithm from the dropdown
-- Click **Visualize** to watch the algorithm find the path
-- Click **Generate Maze** to create a random maze
-- **Clear Path** removes animation but keeps walls
-- **Clear Board** resets everything
+## Getting Started
 
-### Color Legend
-- **Green**: Start node
-- **Red**: End node
-- **White**: Wall
-- **Blue/Purple (animated)**: Visited cells during exploration
-- **Yellow (animated)**: Final shortest path
+### Prerequisites
+- Node.js v16+
+- Python 3.11+ (for the AI backend)
 
-## Algorithm Details
+### Frontend
 
-### Dijkstra's Algorithm
-- **Time Complexity**: O((V + E) log V) where V is vertices, E is edges
-- **Space Complexity**: O(V)
-- **Characteristics**: 
-  - Guarantees shortest path
-  - Expands nodes in all directions equally
-  - Good for understanding basic pathfinding
-  - Can be slower than A*
+```bash
+git clone https://github.com/sean-kim05/DSAVisualizer.git
+cd DSAVisualizer
+npm install
+npm run dev
+```
 
-### A* Algorithm
-- **Time Complexity**: O((V + E) log V)
-- **Space Complexity**: O(V)
-- **Characteristics**:
-  - Guarantees shortest path
-  - Uses Manhattan distance heuristic for direction
-  - Faster than Dijkstra in most cases
-  - Uses informed search to prioritize promising nodes
+Open `http://localhost:5173`.
 
-### Breadth First Search (BFS)
-- **Time Complexity**: O(V + E)
-- **Space Complexity**: O(V)
-- **Characteristics**:
-  - Guarantees shortest path in unweighted grids
-  - Explores all neighbors at current depth before moving to next
-  - Simple and efficient for unweighted graphs
-  - Best for large unweighted grids
+### Backend (AI Panel)
 
-### Maze Generation (Recursive Division)
-- **Algorithm**: Recursive division with passage generation
-- **Time Complexity**: O(V) where V is total cells
-- **Space Complexity**: O(depth of recursion) ≈ O(log(max(rows, cols)))
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+Create a `.env` file:
+```
+ANTHROPIC_API_KEY=your_key_here
+```
+
+```bash
+python app.py
+```
+
+The backend runs on `http://localhost:5000`. The frontend proxies `/api` to it automatically in dev via Vite config.
+
+### Production Build
+
+```bash
+npm run build
+```
+
+---
+
+## Algorithm Reference
+
+### Pathfinding
+
+| Algorithm | Time | Space | Shortest Path |
+|---|---|---|---|
+| Dijkstra's | O((V+E) log V) | O(V) | Yes |
+| A* | O((V+E) log V) | O(V) | Yes |
+| BFS | O(V+E) | O(V) | Yes (unweighted) |
+| DFS | O(V+E) | O(V) | No |
+| Greedy Best-First | O((V+E) log V) | O(V) | No |
+
+### Sorting
+
+| Algorithm | Best | Average | Worst | Space |
+|---|---|---|---|---|
+| Bubble Sort | O(n) | O(n²) | O(n²) | O(1) |
+| Selection Sort | O(n²) | O(n²) | O(n²) | O(1) |
+| Insertion Sort | O(n) | O(n²) | O(n²) | O(1) |
+| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) |
+| Quick Sort | O(n log n) | O(n log n) | O(n²) | O(log n) |
+
+---
 
 ## Project Structure
 
@@ -101,208 +123,37 @@
 DSAVisualizer/
 ├── src/
 │   ├── components/
-│   │   ├── Grid.jsx           # Interactive grid for pathfinding
-│   │   ├── Grid.css           # Grid styling and animations
+│   │   ├── AIPanel/           # Claude AI assistant panel
+│   │   ├── Grid.jsx           # Interactive pathfinding grid
 │   │   ├── Navbar.jsx         # Tab navigation
-│   │   ├── Navbar.css         # Navbar styling
-│   │   ├── TreeVisualization.jsx # BST tree renderer
-│   │   ├── Tree.css           # Tree styling
-│   │   ├── WelcomeModal.jsx   # Tutorial modal
-│   │   ├── WelcomeModal.css   # Modal styling
-│   │   ├── Toast.jsx          # Toast notifications
-│   │   └── Toast.css          # Toast styling
+│   │   ├── TreeVisualization.jsx
+│   │   ├── WelcomeModal.jsx
+│   │   └── Toast.jsx
 │   ├── algorithms/
-│   │   ├── pathfinding/
-│   │   │   ├── dijkstra.js    # Dijkstra's algorithm
-│   │   │   ├── astar.js       # A* algorithm
-│   │   │   ├── bfs.js         # Breadth First Search
-│   │   │   ├── dfs.js         # Depth First Search
-│   │   │   ├── greedy.js      # Greedy Best First
-│   │   │   └── maze.js        # Maze generation
-│   │   ├── sorting/
-│   │   │   ├── bubble.js      # Bubble sort
-│   │   │   ├── selection.js   # Selection sort
-│   │   │   ├── insertion.js   # Insertion sort
-│   │   │   ├── merge.js       # Merge sort
-│   │   │   └── quick.js       # Quick sort
-│   │   ├── tree/
-│   │   │   └── bst.js         # Binary Search Tree
-│   │   ├── heap/
-│   │   ├── graph/
-│   │   ├── linkedlist/
-│   │   ├── stackqueue/
-│   │   └── binarysearch/
+│   │   ├── pathfinding/       # dijkstra, astar, bfs, dfs, greedy, maze
+│   │   ├── sorting/           # bubble, selection, insertion, merge, quick
+│   │   └── tree/              # bst
 │   ├── pages/
-│   │   ├── PathfindingPage.jsx  # Pathfinding visualizer
-│   │   ├── SortingPage.jsx      # Sorting visualizer
-│   │   ├── TreePage.jsx         # BST visualizer
-│   │   ├── HeapPage.jsx         # Heap visualizer
-│   │   ├── GraphPage.jsx        # Graph visualizer
-│   │   ├── LinkedListPage.jsx   # Linked list visualizer
-│   │   ├── StackQueuePage.jsx   # Stack/Queue visualizer
-│   │   ├── BinarySearchPage.jsx # Binary search visualizer
-│   │   ├── Page.css            # Common page styling
-│   │   └── Tree.css            # Tree page specific styling
-│   ├── App.jsx                 # Main app component
-│   ├── App.css                 # App styling
-│   ├── main.jsx                # React entry point
-│   └── styles.css              # Global styles
-├── public/
-│   └── index.html              # HTML entry point
-├── package.json                # Project dependencies
-├── vite.config.js              # Vite configuration
-└── README.md                   # This file
+│   │   ├── PathfindingPage.jsx
+│   │   ├── SortingPage.jsx
+│   │   ├── TreePage.jsx
+│   │   ├── HeapPage.jsx
+│   │   ├── GraphPage.jsx
+│   │   ├── LinkedListPage.jsx
+│   │   ├── StackQueuePage.jsx
+│   │   ├── BinarySearchPage.jsx
+│   │   └── AboutPage.jsx
+│   └── App.jsx
+├── backend/
+│   ├── app.py                 # Flask API with /api/explain SSE endpoint
+│   ├── algorithm_data.py      # Algorithm context fed to the AI
+│   └── requirements.txt
+├── render.yaml                # Render deployment config
+└── vite.config.js
 ```
 
-## Algorithm Details
-
-### Pathfinding Algorithms
-
-#### Dijkstra's Algorithm
-- **Time Complexity**: O((V + E) log V) where V is vertices, E is edges
-- **Space Complexity**: O(V)
-- **Characteristics**: Guarantees shortest path, explores equally in all directions
-
-#### A* Algorithm
-- **Time Complexity**: O((V + E) log V)
-- **Space Complexity**: O(V)
-- **Characteristics**: Guarantees shortest path, faster than Dijkstra using Manhattan distance heuristic
-
-#### Breadth First Search (BFS)
-- **Time Complexity**: O(V + E)
-- **Space Complexity**: O(V)
-- **Characteristics**: Guarantees shortest path in unweighted grids, simple and efficient
-
-#### Depth First Search (DFS)
-- **Time Complexity**: O(V + E)
-- **Space Complexity**: O(V)
-- **Characteristics**: Does not guarantee shortest path, explores depth-first
-
-#### Greedy Best First Search
-- **Time Complexity**: O((V + E) log V)
-- **Space Complexity**: O(V)
-- **Characteristics**: Does not guarantee shortest path, uses heuristic only
-
-### Sorting Algorithms
-
-#### Bubble Sort
-- **Time Complexity**: O(n²) worst/average, O(n) best
-- **Space Complexity**: O(1)
-- **Characteristics**: Simple, repeatedly swaps adjacent elements
-
-#### Selection Sort
-- **Time Complexity**: O(n²) all cases
-- **Space Complexity**: O(1)
-- **Characteristics**: Finds minimum element and places it at beginning
-
-#### Insertion Sort
-- **Time Complexity**: O(n²) worst/average, O(n) best
-- **Space Complexity**: O(1)
-- **Characteristics**: Builds sorted array one element at a time
-
-#### Merge Sort
-- **Time Complexity**: O(n log n) all cases
-- **Space Complexity**: O(n)
-- **Characteristics**: Divide and conquer algorithm, stable sort
-
-#### Quick Sort
-- **Time Complexity**: O(n²) worst, O(n log n) average/best
-- **Space Complexity**: O(log n)
-- **Characteristics**: Divide and conquer, in-place sorting
-
-## Getting Started
-
-### Prerequisites
-- Node.js (v16+)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/sean-kim05/DSAVisualizer.git
-cd DSAVisualizer
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npm run dev
-```
-
-4. Open your browser and navigate to `http://localhost:5173`
-
-### Building for Production
-
-```bash
-npm run build
-```
-
-The optimized build will be in the `dist/` directory.
-
-## Technical Highlights
-
-### Smooth Animations
-- CSS keyframe animations for visited and path cells
-- 10ms delay between visited cell animations
-- 50ms delay between path cell animations
-- Ripple and fade effects for visual feedback
-
-### Performance Optimizations
-- Efficient grid updates using React hooks
-- Grid node cloning to prevent mutations
-- Event delegation for mouse interactions
-- CSS transitions for smooth 60fps animations
-
-### User Experience
-- Welcome modal with instructions on first load
-- Disabled controls during animation
-- Toast notifications for user feedback
-- Responsive grid that adapts to screen size
-- Smooth dragging without flickering
-
-## Browser Compatibility
-
-- Chrome/Chromium (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Tips & Tricks
-
-1. **Pathfinding**: Generate a maze and compare how different algorithms explore
-2. **Sorting**: Try different array sizes to see performance differences
-3. **Trees**: Insert random values to see how the tree balances
-4. **Speed Control**: Use the speed slider to understand algorithm steps better
-
-## Browser Compatibility
-
-- Chrome/Chromium (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+---
 
 ## License
 
-This project is open source and available under the MIT License.
-
-## Future Enhancements
-
-- Add more algorithms (Bellman-Ford, Floyd-Warshall, Red-Black Trees, etc.)
-- Weighted graphs and terrain types
-- Step-by-step debugging mode
-- Statistics and performance comparisons
-- Export/import functionality for custom data sets
-
+MIT
