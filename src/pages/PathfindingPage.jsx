@@ -18,7 +18,10 @@ function PathfindingPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
   const [endNode, setEndNode] = useState({ row: 10, col: 44 })
   const [isAnimating, setIsAnimating] = useState(false)
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('dijkstra')
+  const [speed, setSpeed] = useState('normal')
   const [nodeCounter, setNodeCounter] = useState({ visited: 0, pathLength: 0 })
+
+  const speedMap = { slow: 40, normal: 10, fast: 2 }
 
   useEffect(() => {
     onAlgorithmChange?.(ALGO_DISPLAY_NAMES['dijkstra'])
@@ -96,7 +99,7 @@ function PathfindingPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
     setNodeCounter(prev => ({ ...prev, visited: visitedNodesInOrder.length, pathLength: shortestPath.length }))
 
     for (const node of visitedNodesInOrder) {
-      await new Promise(resolve => setTimeout(resolve, 10))
+      await new Promise(resolve => setTimeout(resolve, speedMap[speed]))
       setGrid(prevGrid => {
         const newGrid = prevGrid.map(r => [...r])
         newGrid[node.row][node.col] = { ...newGrid[node.row][node.col], isVisited: true }
@@ -105,7 +108,7 @@ function PathfindingPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
     }
 
     for (const node of shortestPath) {
-      await new Promise(resolve => setTimeout(resolve, 50))
+      await new Promise(resolve => setTimeout(resolve, speedMap[speed] * 5))
       setGrid(prevGrid => {
         const newGrid = prevGrid.map(r => [...r])
         newGrid[node.row][node.col] = { ...newGrid[node.row][node.col], isPath: true }
@@ -189,6 +192,20 @@ function PathfindingPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
             {Object.entries(algorithmInfo).map(([key, val]) => (
               <option key={key} value={key}>{val.name}</option>
             ))}
+          </select>
+        </div>
+
+        <div className="control-group">
+          <label htmlFor="speed-select">Speed</label>
+          <select
+            id="speed-select"
+            value={speed}
+            onChange={(e) => setSpeed(e.target.value)}
+            disabled={isAnimating}
+          >
+            <option value="slow">Slow</option>
+            <option value="normal">Normal</option>
+            <option value="fast">Fast</option>
           </select>
         </div>
 

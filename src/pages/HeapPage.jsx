@@ -297,15 +297,9 @@ function HeapPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
       {heap.length === 0 ? (
         <div className="placeholder">
           <div className="placeholder-content">
-            <div className="placeholder-icon">🏔️</div>
             <h2>{heapType === 'min' ? 'Min' : 'Max'} Heap</h2>
             <p>Insert values or generate a random heap to get started.</p>
-            <div className="placeholder-features">
-              <span className="placeholder-feature">Min/Max Heap</span>
-              <span className="placeholder-feature">Insert & Extract</span>
-              <span className="placeholder-feature">Animated Bubble-Up/Down</span>
-              <span className="placeholder-feature">Array View</span>
-            </div>
+            <button className="placeholder-cta" onClick={generateRandom}>Generate Random Heap</button>
           </div>
         </div>
       ) : (

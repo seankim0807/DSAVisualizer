@@ -382,8 +382,7 @@ function GraphPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
               position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', pointerEvents: 'none',
             }}>
-              <div style={{ fontSize: '48px', marginBottom: '12px' }}>🕸️</div>
-              <div style={{ fontSize: '15px' }}>Click the canvas to add nodes, then switch to Add Edges mode to connect them</div>
+              <div style={{ fontSize: '13px' }}>Click the canvas to add nodes, then switch to Add Edges mode to connect them</div>
             </div>
           )}
           <svg
