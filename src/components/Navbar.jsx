@@ -7,10 +7,14 @@ function Navbar({ activeTab, setActiveTab, tabs }) {
       <div className="navbar-content">
         <h1 className="title">
           <span className="logo-mark">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <rect x="1" y="4" width="5" height="5" rx="1" fill="white" opacity="0.9"/>
-              <rect x="8" y="4" width="5" height="5" rx="1" fill="white" opacity="0.5"/>
-              <rect x="4.5" y="1" width="5" height="5" rx="1" fill="white" opacity="0.7"/>
+            <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+              <line x1="16" y1="7" x2="8" y2="20" stroke="white" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+              <line x1="16" y1="7" x2="24" y2="20" stroke="white" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+              <line x1="8" y1="20" x2="24" y2="20" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.6"/>
+              <circle cx="16" cy="7" r="3.2" fill="white"/>
+              <circle cx="8" cy="20" r="2.8" fill="white" opacity="0.85"/>
+              <circle cx="24" cy="20" r="2.8" fill="white" opacity="0.85"/>
+              <circle cx="16" cy="20" r="2" fill="white" opacity="0.65"/>
             </svg>
           </span>
           <span>DSA Visualizer</span>
