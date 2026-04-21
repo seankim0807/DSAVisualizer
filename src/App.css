@@ -10,13 +10,13 @@
   flex: 1;
   display: flex;
   overflow: hidden;
-  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideIn 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;

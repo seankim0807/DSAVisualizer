@@ -232,13 +232,8 @@ function LinkedListPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
           <div className="placeholder-content">
             <div className="placeholder-icon">🔗</div>
             <h2>Linked List Visualizer</h2>
-            <p>Insert values or generate a random list to get started.</p>
-            <div className="placeholder-features">
-              <span className="placeholder-feature">Singly & Doubly</span>
-              <span className="placeholder-feature">Insert Head / Tail / At Index</span>
-              <span className="placeholder-feature">Search & Delete</span>
-              <span className="placeholder-feature">Pointer Animation</span>
-            </div>
+            <p>Insert values using the toolbar, or start with a random list.</p>
+            <button className="placeholder-cta" onClick={generateRandom}>Generate Random List</button>
           </div>
         </div>
       ) : (
