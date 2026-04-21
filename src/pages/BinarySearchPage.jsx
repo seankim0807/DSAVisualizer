@@ -177,15 +177,9 @@ function BinarySearchPage({ showToast, onAlgorithmChange, onVizStatusChange }) {
       {array.length === 0 ? (
         <div className="placeholder">
           <div className="placeholder-content">
-            <div className="placeholder-icon">🔍</div>
-            <h2>Binary Search Visualizer</h2>
+            <h2>Binary Search</h2>
             <p>Generate a sorted array or load your own, then search for a value.</p>
-            <div className="placeholder-features">
-              <span className="placeholder-feature">O(log n) Search</span>
-              <span className="placeholder-feature">lo / mid / hi Pointers</span>
-              <span className="placeholder-feature">Step-by-Step Log</span>
-              <span className="placeholder-feature">Custom Arrays</span>
-            </div>
+            <button className="placeholder-cta" onClick={generateRandom}>Generate Random Array</button>
           </div>
         </div>
       ) : (

@@ -11,8 +11,8 @@
   --border-light: #3f3f46;
   --accent-primary: #6366f1;
   --accent-secondary: #8b5cf6;
-  --accent-run: #22c55e;
-  --accent-run-hover: #16a34a;
+  --accent-run: #6366f1;
+  --accent-run-hover: #4f52e3;
   --accent-success: #22c55e;
   --accent-warning: #f59e0b;
   --accent-error: #ef4444;
@@ -52,6 +52,4 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--bg-primary);
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0);
-  background-size: 24px 24px;
 }

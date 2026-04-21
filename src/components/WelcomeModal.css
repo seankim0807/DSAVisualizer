@@ -123,18 +123,19 @@
 .modal-button {
   background: var(--accent-primary);
   color: #fff;
-  border: none;
-  padding: 10px 24px;
-  border-radius: 8px;
+  border: 1px solid var(--accent-primary);
+  padding: 9px 24px;
+  border-radius: 7px;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s;
   width: 100%;
 }
 
 .modal-button:hover {
   background: #4f52e3;
+  border-color: #4f52e3;
 }
 
 .modal-close {
