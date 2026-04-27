@@ -3,15 +3,46 @@ from flask_cors import CORS
 import anthropic
 import json
 import os
+import threading
 from dotenv import load_dotenv
 from algorithm_data import ALGORITHM_DATA
 
 load_dotenv()
 
+import httpx
+
+RESPAN_LOG_URL = 'https://api.keywordsai.co/api/request-logs/create'
+
 app = Flask(__name__)
 CORS(app)
 
 client = anthropic.Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
+
+
+def _send_respan_log(messages, output, model, max_tokens, status_code):
+    try:
+        api_key = os.getenv('RESPAN_API_KEY')
+        if not api_key:
+            return
+        prompt_messages = [{'role': m['role'], 'content': m['content']} for m in messages]
+        httpx.post(
+            RESPAN_LOG_URL,
+            json={
+                'model': model,
+                'prompt_messages': prompt_messages,
+                'output': output,
+                'max_tokens': max_tokens,
+                'stream': True,
+                'status_code': status_code,
+            },
+            headers={
+                'Authorization': f'Bearer {api_key}',
+                'Content-Type': 'application/json',
+            },
+            timeout=10,
+        )
+    except Exception:
+        pass
 
 SYSTEM_PROMPT = """You are an expert computer science educator integrated into a DSA (Data Structures & Algorithms) Visualizer. Your role is to help students understand algorithms as they watch live visualizations on screen.
 
@@ -96,6 +127,8 @@ def explain():
     })
 
     def generate():
+        full_output = []
+        status_code = 200
         try:
             with client.messages.stream(
                 model='claude-sonnet-4-6',
@@ -104,14 +137,24 @@ def explain():
                 messages=messages
             ) as stream:
                 for text in stream.text_stream:
+                    full_output.append(text)
                     yield f'data: {json.dumps({"type": "text", "text": text})}\n\n'
             yield f'data: {json.dumps({"type": "done"})}\n\n'
         except anthropic.AuthenticationError:
+            status_code = 401
             yield f'data: {json.dumps({"type": "error", "message": "Invalid API key. Check your ANTHROPIC_API_KEY in backend/.env"})}\n\n'
         except anthropic.RateLimitError:
+            status_code = 429
             yield f'data: {json.dumps({"type": "error", "message": "Rate limit reached. Please wait a moment and try again."})}\n\n'
         except Exception as e:
+            status_code = 500
             yield f'data: {json.dumps({"type": "error", "message": f"Error: {str(e)}"})}\n\n'
+        finally:
+            threading.Thread(
+                target=_send_respan_log,
+                args=(messages, ''.join(full_output), 'claude-sonnet-4-6', 1024, status_code),
+                daemon=True
+            ).start()
 
     return Response(
         stream_with_context(generate()),
@@ -130,4 +173,4 @@ def health():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
